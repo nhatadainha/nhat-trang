@@ -15,4 +15,14 @@ crud("timeline","timeline");crud("memories","memories");
 const upload=multer({storage:multer.diskStorage({destination:(q,f,c)=>c(null,UPLOADS),filename:(q,f,c)=>c(null,Date.now()+"-"+Math.random().toString(36).slice(2)+path.extname(f.originalname))})});
 app.post("/api/gallery/upload",auth,upload.array("photos",20),(q,s)=>{let x=db(),a=q.files.map(f=>({id:Date.now()+Math.random(),title:q.body.title||"",caption:q.body.caption||"",src:"/uploads/"+f.filename}));x.gallery.unshift(...a);save(x);s.json(a)});
 app.delete("/api/gallery/:id",auth,(q,s)=>{let x=db(),id=Number(q.params.id),i=x.gallery.find(a=>Number(a.id)===id);if(i){let f=path.join(ROOT,i.src.replace("/uploads/","uploads/"));if(fs.existsSync(f))fs.unlinkSync(f)}x.gallery=x.gallery.filter(a=>Number(a.id)!==id);save(x);s.json({ok:true})});
-app.get("/admin",(q,s)=>s.sendFile(path.join(ROOT,"public/admin/index.html")));app.listen(PORT,()=>console.log("http://localhost:"+PORT));
+app.get("/", (req, res) => {
+    res.sendFile(path.join(ROOT, "public", "index.html"));
+});
+
+app.get("/admin", (req, res) => {
+    res.sendFile(path.join(ROOT, "public", "admin", "index.html"));
+});
+
+app.listen(PORT, "0.0.0.0", () => {
+    console.log(`Server running on port ${PORT}`);
+});
