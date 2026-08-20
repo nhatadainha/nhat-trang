@@ -1,0 +1,18 @@
+const express=require("express"),session=require("express-session"),bcrypt=require("bcryptjs"),multer=require("multer"),path=require("path"),fs=require("fs");
+const app=express(),PORT=process.env.PORT||3000,ROOT=__dirname,DATA=path.join(ROOT,"data"),UPLOADS=path.join(ROOT,"uploads");
+fs.mkdirSync(DATA,{recursive:true});fs.mkdirSync(UPLOADS,{recursive:true});
+const dbFile=path.join(DATA,"db.json");
+if(!fs.existsSync(dbFile))fs.writeFileSync(dbFile,JSON.stringify({settings:{coupleName:"Hồng Nhật ❤️ Thu Trang",subtitle:"Một hành trình, hai trái tim, một tình yêu.",startDate:"2024-08-20",heroImage:"",letter:"Cảm ơn vì đã xuất hiện và cùng nhau viết nên câu chuyện đẹp này."},timeline:[{id:1,date:"2024-08-20",title:"Ngày bắt đầu",description:"Ngày chúng mình chính thức bắt đầu hành trình bên nhau.",image:""}],memories:[],gallery:[]},null,2));
+const usersFile=path.join(DATA,"users.json");if(!fs.existsSync(usersFile))fs.writeFileSync(usersFile,JSON.stringify([{username:"admin",passwordHash:bcrypt.hashSync(process.env.ADMIN_PASSWORD||"admin123",10)}]));
+const db=()=>JSON.parse(fs.readFileSync(dbFile));const save=x=>fs.writeFileSync(dbFile,JSON.stringify(x,null,2));
+app.use(express.json({limit:"5mb"}));app.use(express.urlencoded({extended:true}));app.use(session({secret:process.env.SESSION_SECRET||"change-this-secret",resave:false,saveUninitialized:false,cookie:{httpOnly:true,sameSite:"lax"}}));app.use("/uploads",express.static(UPLOADS));app.use(express.static(path.join(ROOT,"public")));
+const auth=(q,s,n)=>q.session.user?n():s.status(401).json({error:"Chưa đăng nhập"});
+app.post("/api/login",(q,s)=>{let {username,password}=q.body,u=JSON.parse(fs.readFileSync(usersFile)).find(x=>x.username===username);if(!u||!bcrypt.compareSync(password,u.passwordHash))return s.status(401).json({error:"Sai tài khoản hoặc mật khẩu"});q.session.user={username};s.json({ok:true})});
+app.post("/api/logout",(q,s)=>q.session.destroy(()=>s.json({ok:true})));app.get("/api/me",(q,s)=>s.json({loggedIn:!!q.session.user}));
+app.get("/api/site",(q,s)=>s.json(db()));app.put("/api/settings",auth,(q,s)=>{let x=db();x.settings={...x.settings,...q.body};save(x);s.json(x.settings)});
+function crud(name,key){app.post("/api/"+name,auth,(q,s)=>{let x=db(),i={...q.body,id:Date.now()};x[key].unshift(i);save(x);s.json(i)});app.put("/api/"+name+"/:id",auth,(q,s)=>{let x=db(),id=Number(q.params.id),i=x[key].findIndex(a=>Number(a.id)===id);if(i<0)return s.status(404).json({error:"Không tìm thấy"});x[key][i]={...x[key][i],...q.body,id};save(x);s.json(x[key][i])});app.delete("/api/"+name+"/:id",auth,(q,s)=>{let x=db();x[key]=x[key].filter(a=>Number(a.id)!==Number(q.params.id));save(x);s.json({ok:true})})}
+crud("timeline","timeline");crud("memories","memories");
+const upload=multer({storage:multer.diskStorage({destination:(q,f,c)=>c(null,UPLOADS),filename:(q,f,c)=>c(null,Date.now()+"-"+Math.random().toString(36).slice(2)+path.extname(f.originalname))})});
+app.post("/api/gallery/upload",auth,upload.array("photos",20),(q,s)=>{let x=db(),a=q.files.map(f=>({id:Date.now()+Math.random(),title:q.body.title||"",caption:q.body.caption||"",src:"/uploads/"+f.filename}));x.gallery.unshift(...a);save(x);s.json(a)});
+app.delete("/api/gallery/:id",auth,(q,s)=>{let x=db(),id=Number(q.params.id),i=x.gallery.find(a=>Number(a.id)===id);if(i){let f=path.join(ROOT,i.src.replace("/uploads/","uploads/"));if(fs.existsSync(f))fs.unlinkSync(f)}x.gallery=x.gallery.filter(a=>Number(a.id)!==id);save(x);s.json({ok:true})});
+app.get("/admin",(q,s)=>s.sendFile(path.join(ROOT,"public/admin/index.html")));app.listen(PORT,()=>console.log("http://localhost:"+PORT));
