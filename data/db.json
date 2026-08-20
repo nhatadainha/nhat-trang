@@ -2,7 +2,7 @@
   "settings": {
     "coupleName": "Hồng Nhật ❤️ Thu Trang",
     "subtitle": "Một hành trình, hai trái tim, một tình yêu.",
-    "startDate": "2024-08-20",
+    "startDate": "2020-12-14",
     "heroImage": "",
     "letter": "Cảm ơn vì đã xuất hiện và cùng nhau viết nên câu chuyện đẹp này."
   },
@@ -16,5 +16,12 @@
     }
   ],
   "memories": [],
-  "gallery": []
+  "gallery": [
+    {
+      "id": 1787213750133.7288,
+      "title": "",
+      "caption": "",
+      "src": "/uploads/1787213750130-4syg4aqt387.jpg"
+    }
+  ]
 }

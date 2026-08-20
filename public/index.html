@@ -1,1 +1,93 @@
-<!doctype html><html lang="vi"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Hồng Nhật ❤️ Thu Trang</title><link rel="stylesheet" href="/css/style.css"></head><body><header class="hero"><div><small>OUR LOVE STORY</small><h1 id="name"></h1><p id="sub"></p><div class="days"><b id="days">0</b><span>ngày bên nhau</span></div><a href="#timeline">Bắt đầu hành trình ❤️</a></div></header><section><h2>Câu chuyện của chúng mình</h2><p id="letter" class="letter"></p></section><section><h2>Timeline</h2><div id="timeline"></div></section><section><h2>Những kỷ niệm</h2><div id="memories" class="grid"></div></section><section><h2>Album ảnh</h2><div id="gallery" class="gallery"></div></section><footer>Made with ❤️ for Hồng Nhật & Thu Trang</footer><script src="/js/main.js"></script></body></html>
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0d070b">
+<meta name="description" content="Hành trình tình yêu của Hồng Nhật và Thu Trang">
+<title>Hồng Nhật × Thu Trang — Our Story</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="noise"></div>
+<div class="cursor-glow"></div>
+<div class="progress"><span id="progress"></span></div>
+
+<header class="hero" id="home">
+  <div class="hero-bg"></div><div class="hero-vignette"></div>
+  <nav class="nav">
+    <a class="monogram" href="#home">H <span>♥</span> T</a>
+    <div class="navlinks">
+      <a href="#story">Story</a><a href="#timeline">Journey</a><a href="#gallery">Moments</a><a href="#memories">Memories</a>
+    </div>
+    <div class="nav-actions"><button id="themeBtn" class="round-btn" aria-label="Theme">☾</button><a href="/admin" class="admin-link">ADMIN</a></div>
+  </nav>
+
+  <div class="hero-content">
+    <div class="tiny-label reveal">A LOVE STORY · EST. <span id="year">2020</span></div>
+    <h1 class="hero-title reveal"><span>Hồng Nhật</span><i>×</i><span>Thu Trang</span></h1>
+    <p id="sub" class="hero-sub reveal">Hai người, một hành trình, vô vàn khoảnh khắc.</p>
+    <div class="hero-counter reveal">
+      <div><b id="days">0</b><small>NGÀY</small></div><em></em>
+      <div><b id="hours">00</b><small>GIỜ</small></div><em></em>
+      <div><b id="minutes">00</b><small>PHÚT</small></div><em></em>
+      <div><b id="seconds">00</b><small>GIÂY</small></div>
+    </div>
+    <a class="scroll-cta reveal" href="#story"><span>Khám phá câu chuyện</span><b>↓</b></a>
+  </div>
+  <div class="hero-bottom"><span>OUR STORY</span><span>SCROLL TO EXPLORE</span><span>♥</span></div>
+</header>
+
+<main>
+<section id="story" class="story section">
+  <div class="section-label reveal">01 / THE BEGINNING</div>
+  <div class="story-grid">
+    <div class="story-title reveal"><span>It all</span><strong>started<br>with <em>us.</em></strong></div>
+    <div class="story-copy reveal"><p id="letter">Một câu chuyện đẹp được viết bằng những điều rất nhỏ: một ánh mắt, một cuộc trò chuyện, một lần nắm tay và thật nhiều ngày tháng cùng nhau.</p><div class="signature">Hồng Nhật <span>♥</span> Thu Trang</div></div>
+  </div>
+  <div class="manifesto reveal"><span>“</span><p>Không cần một tình yêu hoàn hảo.<br>Chỉ cần một người luôn muốn cùng mình đi tiếp.</p></div>
+</section>
+
+<section id="timeline" class="journey section-dark">
+  <div class="section-inner">
+    <div class="section-label light reveal">02 / THE JOURNEY</div>
+    <div class="section-heading reveal"><h2>Every chapter<br>became <em>us.</em></h2><p>Những cột mốc nhỏ tạo nên một câu chuyện lớn.</p></div>
+    <div id="timelineList" class="cinematic-timeline"></div>
+  </div>
+</section>
+
+<section id="gallery" class="gallery-section section">
+  <div class="section-label reveal">03 / MOMENTS</div>
+  <div class="section-heading reveal"><h2>Little moments,<br><em>forever memories.</em></h2><p>Những khoảnh khắc bình thường nhưng lại trở nên đặc biệt.</p></div>
+  <div id="galleryGrid" class="masonry"></div>
+</section>
+
+<section id="memories" class="memories section-dark">
+  <div class="section-inner">
+    <div class="section-label light reveal">04 / MEMORIES</div>
+    <div class="memory-intro reveal"><h2>Things we<br>never want to <em>forget.</em></h2></div>
+    <div id="memoriesGrid" class="memory-grid"></div>
+  </div>
+</section>
+
+<section class="closing section">
+  <div class="closing-orbit"><span>♥</span></div>
+  <div class="section-label reveal">05 / TO BE CONTINUED</div>
+  <h2 class="closing-title reveal">And the best<br>is still <em>ahead.</em></h2>
+  <p class="closing-text reveal">Câu chuyện của chúng ta chưa kết thúc.<br>Nó chỉ vừa đi qua những chương đầu tiên.</p>
+  <a class="back-home reveal" href="#home">↑ &nbsp; Về đầu trang</a>
+</section>
+</main>
+
+<footer><div class="footer-mark">H <span>♥</span> T</div><p>Hồng Nhật & Thu Trang</p><small>Made with love · <span id="footerYear"></span></small></footer>
+
+<div id="lightbox" class="lightbox" aria-hidden="true">
+  <button class="lb-close" id="lbClose">×</button><button class="lb-prev" id="lbPrev">‹</button>
+  <figure><img id="lbImg" src="" alt=""><figcaption id="lbCaption"></figcaption></figure><button class="lb-next" id="lbNext">›</button>
+</div>
+<script src="/js/main.js"></script>
+</body>
+</html>
